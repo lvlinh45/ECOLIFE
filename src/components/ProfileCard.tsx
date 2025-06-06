@@ -1,5 +1,6 @@
-// /src/components/ProfileCard.tsx
 import * as React from "react";
+import * as Dialog from "@radix-ui/react-dialog"; // Import Dialog from Radix UI
+import Modal from "./Modal"; // Import Modal component
 
 interface ProfileCardProps {
   name: string;
@@ -21,7 +22,7 @@ const ProfileCard: React.FC<ProfileCardProps> = ({
   profileImageUrl,
 }) => {
   return (
-    <div className="bg-white shadow-lg w-full rounded-2xl p-6 flex flex-col items-center transition-all transform hover:scale-105 hover:shadow-2xl duration-300">
+    <div className="bg-white shadow-lg w-full mx-auto rounded-2xl p-6 flex flex-col items-center transition-all transform hover:scale-105 hover:shadow-2xl duration-300 border border-gray-200">
       {/* Ảnh đại diện */}
       <img
         src={profileImageUrl}
@@ -54,9 +55,19 @@ const ProfileCard: React.FC<ProfileCardProps> = ({
       </div>
 
       {/* Nút đặt ngay */}
-      <button className="bg-green-500 text-white py-2 px-6 rounded-full mt-4 hover:bg-green-600 transition-all duration-300">
-        Đặt ngay
-      </button>
+      <Dialog.Root>
+        <Dialog.Trigger className="bg-green-500 text-white py-2 px-6 rounded-full mt-4 hover:bg-green-600 transition-all duration-300">
+          Đặt ngay
+        </Dialog.Trigger>
+
+        {/* Modal */}
+        <Dialog.Portal>
+          <Dialog.Overlay className="fixed inset-0 bg-black bg-opacity-50 z-40" />
+          <Dialog.Content className="fixed top-0 left-0 mx-auto right-0 bottom-0 flex justify-center items-center w-full md:w-1/2 bg-white p-8 rounded-lg z-50">
+            <Modal name={name} />
+          </Dialog.Content>
+        </Dialog.Portal>
+      </Dialog.Root>
     </div>
   );
 };
